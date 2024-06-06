@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "85241110613",
+    "project_id": "ghoslychatapp",
+    "storage_bucket": "ghoslychatapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85241110613:android:676c552e8c412bc77634dc",
+        "android_client_info": {
+          "package_name": "com.example.ghoslychatapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQhHRTP3w5_42-TQmLDXmHrGNBXJYXGTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

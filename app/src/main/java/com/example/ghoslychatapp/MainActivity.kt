@@ -8,39 +8,69 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.compose.composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.ghoslychatapp.Screens.ChatListScreen
+import com.example.ghoslychatapp.Screens.LoginScreen
+import com.example.ghoslychatapp.Screens.SignUpScreen
 import com.example.ghoslychatapp.ui.theme.GhoslyChatAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+sealed class DestinationScreen(var route: String){
+    object SignUp :DestinationScreen("signUp")
+    object LogIn :DestinationScreen("logIn")
+    object Profile:DestinationScreen("profile")
+    object ChatList :DestinationScreen("chatList")
+
+    object SingleChat:DestinationScreen("singleChat/{chatId}"){
+         fun createRoute(charId: String) = "singlechat/$charId"
+    }
+
+    object StatusList :DestinationScreen("statusList")
+
+    object SingleStatus :DestinationScreen("singleStatus/{userId}"){
+        fun createRoute(userId: String) = "singlechat/$userId"
+    }
+
+
+}
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GhoslyChatAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+            appNavigation()
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    @Composable
+    fun appNavigation(){
+        var navController = rememberNavController()
+        var vm = hiltViewModel<GCViewModel>()
+        NavHost(navController = navController, startDestination = DestinationScreen.SignUp.route){
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GhoslyChatAppTheme {
-        Greeting("Android")
+            composable(DestinationScreen.SignUp.route){
+                SignUpScreen(navController,vm)
+            }
+
+            composable(DestinationScreen.LogIn.route){
+                LoginScreen()
+            }
+
+            composable(DestinationScreen.ChatList.route){
+                ChatListScreen()
+            }
+
+        }
+
+
     }
 }
+
+
+
+
