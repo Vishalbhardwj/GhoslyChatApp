@@ -3,21 +3,16 @@ package com.example.ghoslychatapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.ghoslychatapp.Screens.ChatListScreen
 import com.example.ghoslychatapp.Screens.LoginScreen
+import com.example.ghoslychatapp.Screens.ProfileScreen
 import com.example.ghoslychatapp.Screens.SignUpScreen
-import com.example.ghoslychatapp.ui.theme.GhoslyChatAppTheme
+import com.example.ghoslychatapp.Screens.SingleStatusScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 sealed class DestinationScreen(var route: String){
@@ -58,11 +53,17 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.LogIn.route){
-                LoginScreen()
+                LoginScreen(navController,vm)
             }
 
             composable(DestinationScreen.ChatList.route){
-                ChatListScreen()
+                ChatListScreen(navController,vm)
+            }
+            composable(DestinationScreen.Profile.route){
+                ProfileScreen(navController,vm)
+            }
+            composable(DestinationScreen.SingleStatus.route){
+                SingleStatusScreen(navController,vm)
             }
 
         }
