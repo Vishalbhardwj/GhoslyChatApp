@@ -28,11 +28,11 @@ class GCViewModel @Inject constructor(
     var userData = mutableStateOf<UserData?>(null)
 
     init {
-        val currentUser = auth.currentUser
-        signIn.value = currentUser!=null
-        currentUser?.uid?.let{
-            getUserData(it)
-        }
+//        val currentUser = auth.currentUser
+//        signIn.value = currentUser!=null
+//        currentUser?.uid?.let{
+//            getUserData(it)
+//        }
     }
 
     fun signUp(name:String, number:String,email:String,password:String){
@@ -113,6 +113,27 @@ class GCViewModel @Inject constructor(
             }
         }
 
+    }
+
+    fun logIn(email: String , password: String){
+        if(email.isEmpty() or password.isEmpty()){
+            handleException(customMessage = "Please Fill All Fields.")
+            return
+        }else{
+            inProcess.value = true
+            auth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                if(it.isSuccessful){
+                    signIn.value =true;
+                    auth.currentUser?.uid?.let {
+                        getUserData(it)
+                    }
+                }else{
+                    handleException(it.exception,"LogIn failed.")
+                }
+            }
+
+
+        }
     }
 
     fun handleException(exception: Exception?=null,customMessage:String=""){

@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -87,4 +89,13 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("com.exyte:animated-navigation-bar:1.0.0")
+    configurations.all {
+        resolutionStrategy {
+            force ("androidx.compose.material3:material3:1.2.1")
+        }
+    }
+
+
 }
